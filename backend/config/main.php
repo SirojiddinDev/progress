@@ -13,8 +13,15 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        // 'view' => [
+        //     'theme' => [
+        //         'pathMap' => [
+        //             '@app/views' => '@vendor/dmstr/yii2-adminlte-asset/example-views/yiisoft/yii2-app'
+        //         ],
+        //     ],
+        // ],
         'request' => [
-            'baseUrl'=>'/admin',
+            'baseUrl' => '/admin',
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
@@ -41,8 +48,7 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'rules' => [
-            ],
+            'rules' => [],
         ],
     ],
     'params' => $params,
