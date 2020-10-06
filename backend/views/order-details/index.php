@@ -30,7 +30,7 @@ $this->title = 'Order Details';
             <td>
                 <a href="/admin/order-details/view?id=<?= $order['id'] ?>"><span class="glyphicon glyphicon-eye-open"></span></a>
                 <a href="/admin/order-details/update?id=<?= $order['id'] ?>"><span class="glyphicon glyphicon-pencil"></span></a>
-                <?= Html::a('<span class="glyphicon glyphicon-trash">', ['delete', 'id' => $model->id], [
+                <?= Html::a('<span class="glyphicon glyphicon-trash">', ['delete', 'id' => $order['id']], [
                     'data' => [
                         'confirm' => 'Are you sure you want to delete this item?',
                         'method' => 'post',

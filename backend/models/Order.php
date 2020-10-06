@@ -4,6 +4,7 @@ namespace app\models;
 
 use common\models\User;
 use yii\db\ActiveRecord;
+use app\models\OrderDetails;
 
 class Order extends ActiveRecord
 {
@@ -39,5 +40,11 @@ class Order extends ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+
+    public function getDetails()
+    {
+        return OrderDetails::findAll(['order_id' => $this->id]);
     }
 }

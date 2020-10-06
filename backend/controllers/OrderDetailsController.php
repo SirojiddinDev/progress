@@ -60,16 +60,20 @@ class OrderDetailsController extends Controller
     }
 
 
-    public function actionCreate()
+    public function actionCreate($id = null)
     {
         $model = new OrderDetails();
         
         if ($model->load(Yii::$app->request->post()) && $model->save()){
+
+            if ($id){
+                return $this->redirect(['order/view', 'id' => $id]);
+            }
                         
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
-        return $this->render('create', ['model' => $model]);
+        return $this->render('create', ['model' => $model, 'order_id' => $id]);
 
     }
 

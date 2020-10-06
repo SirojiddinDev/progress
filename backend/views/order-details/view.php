@@ -1,6 +1,9 @@
 <?php
 
 use yii\helpers\Html;
+
+$this->title = 'Order Details №' . $model->id;
+
 ?>
 
 <a href="/admin/order-details/update?id=<?= $model['id'] ?>" class="btn btn-primary">Update</a>
