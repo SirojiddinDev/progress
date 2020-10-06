@@ -20,6 +20,37 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    public function actionP404()
+    {
+        return $this->render('p404');
+    }
+
+    public function actionCart()
+    {
+        return $this->render('cart');
+    }
+
+    public function actionCheckout()
+    {
+        return $this->render('checkout');
+    }
+
+    public function actionLogin_and_register()
+    {
+        return $this->render('login_and_register');
+    }
+
+    public function actionWishlist()
+    {
+        return $this->render('wishlist');
+    }
+
+    public function actionCompare()
+    {
+        return $this->render('compare');
+    }
+
+
     /**
      * {@inheritdoc}
      */
