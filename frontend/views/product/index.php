@@ -1,4 +1,4 @@
-<a class="btn btn-success" href="/category/add" role="button">ADD</a>
+<a class="btn btn-success" href="/product/add" role="button">ADD</a>
 <table class="table">
 
     <?php
