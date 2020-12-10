@@ -12,16 +12,13 @@ class UploadController extends Controller
 {
     public function actionIndex()
     {
-
-
         $madel = new UploadForm();
-        if ($madel->load(\Yii::$app->request->post())){
-            if ($madel->myFile=UploadedFile::getInstance($madel,'myFile')){
+        if ($madel->load(\Yii::$app->request->post())) {
+            if ($madel->myFile = UploadedFile::getInstances($madel, 'myFile')) {
                 $madel->upload();
-
             }
         }
-        return $this->render('index',['madel'=>$madel]);
-}
+        return $this->render('index', ['madel' => $madel]);
+    }
 
 }

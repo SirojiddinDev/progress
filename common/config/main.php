@@ -10,4 +10,18 @@ return [
             'class' => 'yii\caching\FileCache',
         ],
     ],
+    'modules' => [
+        'modules' => [
+            'class' => 'common\modules\Markaz',
+        ],
+    ],
+
+
+//    'assetManager' => [
+//        'bundles' => [
+//            'yii\bootstrap\BootstrapAsset' => [
+//                'css' => [],
+//            ],
+//        ],
+//    ],
 ];

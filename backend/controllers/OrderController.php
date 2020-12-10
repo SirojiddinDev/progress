@@ -2,7 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Order;
+use backend\models\Order;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;

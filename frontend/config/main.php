@@ -15,6 +15,7 @@ return [
         'request' => [
             'baseUrl' => '',
             'csrfParam' => '_csrf-frontend',
+            'enableCsrfValidation'=>false
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -42,6 +43,11 @@ return [
             'showScriptName' => false,
             'rules' => [
             ],
+            'class' => 'codemix\localeurls\UrlManager',
+
+            // List all supported languages here
+            // Make sure, you include your app's default language.
+            'languages' => ['en-US', 'en', 'fr', 'de', 'es-*'],
         ],
     ],
     'params' => $params,

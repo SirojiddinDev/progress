@@ -1,10 +1,17 @@
 <?php
+
 namespace frontend\controllers;
 
+use common\models\Category;
+use common\models\Product;
+use common\models\User;
+use frontend\models\Card;
+use frontend\models\Categoryproduct;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
 use Yii;
 use yii\base\InvalidArgumentException;
+use yii\data\ActiveDataProvider;
 use yii\web\BadRequestHttpException;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -98,6 +105,22 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionCard($id)
+    {
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->getBodyParams();
+            $card = new Card();
+
+            $card->user_id = \Yii::$app->user->id;
+            $card->product_id = $id;
+            $card->size = 1;
+            $card->save();
+
+            echo json_encode($data);
+            exit;
+        }
+    }
+
     /**
      * Displays homepage.
      *
@@ -105,7 +128,19 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        if (Yii::$app->request->isAjax) {
+            $data = Yii::$app->request->getBodyParams();
+            echo json_encode($data);
+            exit;
+        }
+        $this->layout = 'index_main';
+//        $session = \Yii::$app->session;
+//        $session->setFlash('success','salom bu FLESH');
+        $model = Product::find()->all();
+        $category = Category::find()->all();
+        $cp = Categoryproduct::find()->all();
+        return $this->render('index', ['cp' => $cp, 'model' => $model, 'category' => $category]);
+
     }
 
     /**
@@ -115,9 +150,9 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+//        if (!Yii::$app->user->isGuest) {
+//            return $this->goHome();
+//        }
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
@@ -186,12 +221,50 @@ class SiteController extends Controller
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
-            return $this->goHome();
+            $this->redirect('/site/tasdiq?email=' . $model->email);
+
+//                $this->goHome();
+        } else {
+
+            return $this->render('signup', [
+                'model' => $model,
+            ]);
+        }
+    }
+
+    public function actionTasdiq()
+    {
+        $email = $_GET['email'];
+        $model = new SignupForm();
+        if (isset($_POST['SignupForm']['password_reset_token'])) {
+            $token = $_POST['SignupForm']['password_reset_token'];
         }
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        if (Yii::$app->request->post()) {//echo $token;die();
+            $tek = User::find()->where(['email' => $email])->one();
+            if ($tek->password_reset_token == $token) {
+//                var_dump($tek);die();
+                $tek->status = 10;
+                $tek->password_reset_token = null;
+                if (!$tek->save()) {
+                    var_dump($tek->getErrors());
+                    die();
+                }
+
+            }
+        }
+        //Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+//            return $this->render('tasdiq');
+//        }
+        return $this->render('tasdiq', ['model' => $model, 'email' => $email]);
+    }
+
+    public function actionKod()
+    {
+        $email = $_GET['email'];
+        $model = User::find()->where(['email' => $email])->asArray()->One();
+
+        return $this->render('kod', ['model' => $model]);
     }
 
     /**
@@ -247,8 +320,8 @@ class SiteController extends Controller
      * Verify email address
      *
      * @param string $token
-     * @throws BadRequestHttpException
      * @return yii\web\Response
+     * @throws BadRequestHttpException
      */
     public function actionVerifyEmail($token)
     {

@@ -1,23 +1,19 @@
-<a class="btn btn-success" href="/product/add" role="button">ADD</a>
-<table class="table">
+<?php
+//$yil = 2100;
+//$oy = 2;
+//echo (($oy == 1) || ($oy == 3) || ($oy == 5) || ($oy == 7) || ($oy == 8) || ($oy == 10) || ($oy == 12)) ? 31 : ((($oy == 4) || ($oy == 6) || ($oy == 9) || ($oy == 11)) ? 30 : ((($yil / 4) && !($yil / 400)) ? 28 : ((($yil / 4) && ($yil / 400)) ? 29 : 28)));
+//die();
 
-    <?php
-    //  $n = count($madel);
+use yii\widgets\ListView;
 
-    //var_dump($madel);die();
-    foreach ($madel as $item) {
-        ?>
-        <tr>
-            <td><?php echo $item['productCode']?></td>
-            <td><?php echo $item['productName']?></td>
-            <td><?php echo $item['productLine']?></td>
-            <td>
-                <a class="btn btn-primary" href="/product/view?id=<?=$item['id'];?>" role="button">VIEW</a>
-                <a class="btn btn-success" href="/product/edit?id=<?=$item['id'];?>" role="button">EDIT</a>
-                <a class="btn btn-danger"  href="/product/delete?id=<?=$item['id'];?>" role="button">DELETE</a>
-            </td>
-        </tr>
+//echo "<div class='row featured__filter'>";
+echo ListView::widget([
+    'dataProvider' => $dataProvider,
+    'itemView' => '_post',
+    'itemOptions' => [
+        'tag' => null,
+//        'class'=>'col-lg-4 col-md-6 col-sm-6'
+    ],
 
-    <? }
-    ?>
-</table>
+    'layout' => "{summary}\n<div class='row'>{items}</div>\n{pager}",
+]);

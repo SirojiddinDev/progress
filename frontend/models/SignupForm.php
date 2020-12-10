@@ -13,6 +13,7 @@ class SignupForm extends Model
     public $username;
     public $email;
     public $password;
+    public $password_reset_token;
 
 
     /**
@@ -28,13 +29,25 @@ class SignupForm extends Model
 
             ['email', 'trim'],
             ['email', 'required'],
-            ['email', 'email'],
+            ['email', 'login_tel'],
             ['email', 'string', 'max' => 255],
             ['email', 'unique', 'targetClass' => '\common\models\User', 'message' => 'This email address has already been taken.'],
 
             ['password', 'required'],
             ['password', 'string', 'min' => Yii::$app->params['user.passwordMinLength']],
         ];
+    }
+
+    public function login_tel($attribute, $params, $validator)
+    {
+        $login_tel = $this->$attribute;
+        if (!preg_match('/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/i', $login_tel))
+        {
+            if(!( $login_tel >= 998900000000)&&( $login_tel <= 998999999999)){
+                $this->addError('email',['massage'=>"Sizning kiritganingiz login ham telefon ham eams!!!"]);
+            }
+        }
+
     }
 
     /**
@@ -51,6 +64,7 @@ class SignupForm extends Model
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
+        $user->password_reset_token = time();
         $user->setPassword($this->password);
         $user->generateAuthKey();
         $user->generateEmailVerificationToken();

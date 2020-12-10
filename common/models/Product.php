@@ -11,7 +11,7 @@ class Product extends ActiveRecord
     public function rules()
     {
         return [
-            [['productCode', 'productName','productLine','productScale','productVendor','productDescription','quantityInStock','buyPrice','MSRP'], 'required']
+            [['code', 'name','Description','characteristic','status'], 'required']
         ];
     }
 

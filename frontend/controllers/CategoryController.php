@@ -6,6 +6,8 @@ namespace frontend\controllers;
 
 use common\models\Category;
 
+use common\models\Product;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use Yii;
 
@@ -14,8 +16,14 @@ class CategoryController extends Controller
     public $enableCsrfValidation = false;
     public function actionIndex()
     {
-        $mad = Category::find()->asArray()->all();
-        return $this->render('index', ['madel' => $mad]);
+
+//        $mad = Category::find()->asArray()->all();
+//        return $this->render('index', ['madel' => $mad]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Category::find(),
+
+        ]);
+        return $this->render('index', ['dataProvider' => $dataProvider]);
     }
 
     public function actionAdd()

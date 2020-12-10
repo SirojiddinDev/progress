@@ -2,7 +2,7 @@
     <div class="form-group row">
         <label for="employeeNumber" class="col-sm-2 col-form-label">Maxsulot kodi</label>
         <div class="col-sm-10">
-            <input type="text" class="form-control" id="productCode" name="productCode" value="<?php echo $data['productCode'] ? $data['productCode'] : "" ?>">
+            <input type="text" class="form-control" id="id" name="id" value="<?php echo $data->id ? $data->id : "" ?>">
         </div>
     </div>
 
